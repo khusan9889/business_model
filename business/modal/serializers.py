@@ -43,3 +43,17 @@ class ModalSerializer(serializers.ModelSerializer):
         modal.save()
 
         return modal
+    
+    
+class RelatedDataSerializer(serializers.Serializer):
+    controls = ControlSerializer(many=True)
+    inputs = InputSerializer(many=True)
+    mechanisms = MechanismSerializer(many=True)
+    outputs = OutputSerializer(many=True)
+
+class ModalDetailWithRelatedDataSerializer(serializers.ModelSerializer):
+    related_data = RelatedDataSerializer(read_only=True)
+
+    class Meta:
+        model = Modal
+        fields = ('id', 'name', 'related_data')
