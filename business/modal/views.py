@@ -15,7 +15,6 @@ class ModalListApiView(generics.ListCreateAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
 
-        # Retrieve related data for each instance and add it to the response data
         modals_with_related_data = []
         for modal_instance in queryset:
             related_data = {
@@ -42,7 +41,6 @@ class ModalDetailApiView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
 
-        # Retrieve related data manually and add it to the response data
         related_data = {
             'controls': ControlSerializer(instance.control_set.all(), many=True).data,
             'inputs': InputSerializer(instance.input_set.all(), many=True).data,
